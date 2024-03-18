@@ -24,9 +24,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
   products: Product[] = [];
 
   // Selected product id to highlight the entry
-  selectedProductId: number = 0;
+  selectedProductId: number | undefined = undefined;
 
   onSelected(productId: number): void {
+    console.log('new selected');
     this.selectedProductId = productId;
   }
 
