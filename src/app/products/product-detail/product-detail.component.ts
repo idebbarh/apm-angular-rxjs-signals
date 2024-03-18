@@ -11,7 +11,7 @@ import {
 import { NgIf, NgFor, CurrencyPipe } from '@angular/common';
 import { Product } from '../product';
 import { ProductService } from '../product.service';
-import { Subscription, tap } from 'rxjs';
+import { EMPTY, Subscription, catchError, finalize, tap } from 'rxjs';
 
 @Component({
   selector: 'pm-product-detail',
@@ -51,9 +51,12 @@ export class ProductDetailComponent implements OnChanges, OnDestroy {
       this.sub = this.productService
         .getProduct(id)
         .pipe(
-          tap((data) => {
+          catchError((error: string) => {
+            this.errorMessage = error;
+            return EMPTY;
+          }),
+          finalize(() => {
             this.isLoading = false;
-            console.log(data);
           }),
         )
         .subscribe((product) => (this.product = product));
