@@ -24,7 +24,6 @@ export class ProductDetailComponent implements OnChanges, OnDestroy {
   @Input({ required: true }) productId!: number;
   errorMessage = '';
   sub!: Subscription;
-  isLoading = true;
 
   //product service
   productService = inject(ProductService);
@@ -43,20 +42,18 @@ export class ProductDetailComponent implements OnChanges, OnDestroy {
   ngOnChanges(changes: SimpleChanges): void {
     const sid = changes['productId'];
 
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
+
     if (sid) {
       const id = sid.currentValue;
-      this.isLoading = true;
-      this.product = null;
-
       this.sub = this.productService
         .getProduct(id)
         .pipe(
           catchError((error: string) => {
             this.errorMessage = error;
             return EMPTY;
-          }),
-          finalize(() => {
-            this.isLoading = false;
           }),
         )
         .subscribe((product) => (this.product = product));
