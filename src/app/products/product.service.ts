@@ -22,12 +22,9 @@ export class ProductService {
   private http = inject(HttpClient);
   private httpErrorService = inject(HttpErrorService);
   private reviewService = inject(ReviewService);
-
-  getProducts(): Observable<Product[]> {
-    return this.http
-      .get<Product[]>(this.productsUrl)
-      .pipe(catchError(this.handleError()));
-  }
+  readonly products$ = this.http
+    .get<Product[]>(this.productsUrl)
+    .pipe(catchError(this.handleError()));
 
   getProduct(id: number): Observable<Product> {
     return this.http.get<Product>(`${this.productsUrl}/${id}`).pipe(

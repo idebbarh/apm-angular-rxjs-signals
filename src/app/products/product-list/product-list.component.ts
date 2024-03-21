@@ -32,8 +32,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   //hooks
   ngOnInit(): void {
-    this.sub = this.productService
-      .getProducts()
+    this.sub = this.productService.products$
       .pipe(
         catchError((error: string) => {
           this.errorMessage = error;
