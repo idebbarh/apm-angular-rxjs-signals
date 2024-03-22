@@ -5,19 +5,22 @@
         {{ pageTitle }}
       </div>
 
-      <div class="card-body" *ngIf="products.length">
-        <div class="list-group">
-          <button
-            type="button"
-            class="list-group-item"
-            *ngFor="let product of products"
-            [ngClass]="{ active: product.id === selectedProductId }"
-            (click)="onSelected(product.id)"
-          >
-            {{ product.productName }}
-          </button>
+      <ng-container *ngIf="products$ | async as products; else productsLoading">
+        <div class="card-body" *ngIf="products.length">
+          <div class="list-group">
+            <button
+              type="button"
+              class="list-group-item"
+              *ngFor="let product of products"
+              [ngClass]="{ active: product.id === selectedProductId }"
+              (click)="onSelected(product.id)"
+            >
+              {{ product.productName }}
+            </button>
+          </div>
         </div>
-      </div>
+      </ng-container>
+      <ng-template #productsLoading>loading...</ng-template>
     </div>
     <div class="alert alert-danger" *ngIf="errorMessage">
       {{ errorMessage }}
