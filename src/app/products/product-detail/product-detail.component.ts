@@ -39,6 +39,8 @@ export class ProductDetailComponent {
   );
 
   addToCart(product: Product) {
+    if (!product.quantityInStock) return;
+
     this.cartService.addToCart(product);
   }
 }

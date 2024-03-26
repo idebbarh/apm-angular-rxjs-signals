@@ -3,11 +3,12 @@ import { NgFor, NgIf } from '@angular/common';
 import { CartItem } from '../cart';
 import { CartItemComponent } from '../cart-item/cart-item.component';
 import { CartService } from '../cart.service';
+import { CartTotalComponent } from '../cart-total/cart-total.component';
 
 @Component({
   selector: 'sw-cart-list',
   standalone: true,
-  imports: [CartItemComponent, NgFor, NgIf],
+  imports: [CartItemComponent, NgFor, NgIf, CartTotalComponent],
   templateUrl: 'cart-list.component.html',
 })
 export class CartListComponent {

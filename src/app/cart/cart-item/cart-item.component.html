@@ -1,5 +1,4 @@
-<div *ngIf='cartItem'>
-
+<div *ngIf="item() as cartItem">
   <div class="row mb-2">
     <div class="col-md-4">
       {{ cartItem.product.productName }}
@@ -7,26 +6,28 @@
     <div class="col-md-2 text-center">
       {{ cartItem.product.price | currency }}
     </div>
-    <div class="col-md-2 text-center">
-      <select class="form-select"
-              aria-label="Quantity list"
-              style="margin-bottom: 10px; width:60px; margin: 0 auto"
-              [ngModel]="cartItem.quantity"
-              (ngModelChange)="onQuantitySelected($event)">
-        <option disabled
-                value="">--Select a quantity--</option>
-        <option *ngFor="let q of qtyArr">{{ q }}</option>
+    <div class="col-md-2 text-center" *ngIf="qtyArr().length > 0">
+      <select
+        class="form-select"
+        aria-label="Quantity list"
+        style="margin-bottom: 10px; width: 60px; margin: 0 auto"
+        [ngModel]="cartItem.quantity"
+        (ngModelChange)="onQuantitySelected($event)"
+      >
+        <option disabled value="">--Select a quantity--</option>
+        <option *ngFor="let q of qtyArr()">{{ q }}</option>
       </select>
     </div>
     <div class="col-md-2 text-center">
-      {{ exPrice | currency }}
+      {{ exPrice() | currency }}
     </div>
     <div class="col-md-2">
-      <button class="btn btn-warning"
-              (click)="removeFromCart()">
+      <button
+        class="btn btn-warning"
+        (click)="removeFromCart(cartItem.product.id)"
+      >
         Delete
       </button>
     </div>
   </div>
-
 </div>

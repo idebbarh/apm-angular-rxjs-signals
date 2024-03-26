@@ -8,8 +8,13 @@
       <div class="col-md-2">Name:</div>
       <div class="col-md-6">{{ product.productName }}</div>
       <div class="col-md-3">
-        <button class="btn btn-primary" (click)="addToCart(product)">
-          Add to Cart
+        <button
+          class="btn btn-primary"
+          (click)="addToCart(product)"
+          [style.opacity]="product.quantityInStock ? 1 : 0.6"
+          [style.pointer-events]="product.quantityInStock ? 'auto' : 'none'"
+        >
+          {{ product.quantityInStock ? "Add to Cart" : "Out of stock" }}
         </button>
       </div>
     </div>
